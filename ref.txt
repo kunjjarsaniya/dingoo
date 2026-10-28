@@ -1,0 +1,20 @@
+/hallmark redesign <path>   
+
+https://www.usehallmark.com/themes/hum/#round
+
+
+Create Room :-
+Enter Name 
+Enter Number 
+
+This Number use on 
+Card Size 
+
+for ex:- User enter 5 
+Then Create 5 x 5 Card Size
+n Number => 5*5 => 25
+Matalb ke Je Card apne Made ema 25 sudhi naj number hoy 
+and Win Thava mate koy pn 5 Line Match thavi joye 
+
+
+

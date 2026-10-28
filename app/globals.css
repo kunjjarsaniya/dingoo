@@ -1,0 +1,567 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@property --curl {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 42px;
+}
+
+:root {
+  color-scheme: light;
+
+  /* Hallmark Hum Palette */
+  --color-paper: oklch(97.4% 0.012 95);
+  --color-paper-2: oklch(94.8% 0.018 95);
+  --color-paper-3: oklch(91.2% 0.024 95);
+  --color-card: oklch(99.6% 0.005 95);
+  --color-card-border: oklch(88% 0.022 95);
+  --color-white: #ffffff;
+  --color-ink: oklch(20% 0.014 255);
+  --color-ink-2: oklch(30% 0.014 255);
+  --color-muted: oklch(50% 0.014 255);
+  --color-edge: oklch(83% 0.038 88);
+
+  /* Chromatic Hallmark Accents */
+  --color-pear: oklch(87% 0.175 96);
+  --color-pear-deep: oklch(72% 0.16 92);
+  --color-coral: oklch(68% 0.21 24);
+  --color-coral-deep: oklch(54% 0.18 24);
+  --color-mint: oklch(82% 0.15 152);
+  --color-mint-deep: oklch(50% 0.13 155);
+  --color-blue: oklch(84% 0.11 236);
+  --color-blue-deep: oklch(48% 0.14 250);
+  --color-sugar: oklch(89% 0.035 236);
+  --color-sand: oklch(77% 0.1 76);
+
+  /* Procedural Paper Grain & Fibre SVGs */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .25 0 0 0 0 .15 0 0 0 .38 -.16'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='turbulence' baseFrequency='.024' numOctaves='4' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .36 0 0 0 0 .24 -10 0 0 0 .35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+
+  /* Shadows */
+  --shadow-paper: drop-shadow(0 0.5px 0.5px oklch(20% 0.014 255 / 0.12)) drop-shadow(2px 3px 2px oklch(20% 0.014 255 / 0.07)) drop-shadow(6px 14px 18px oklch(20% 0.014 255 / 0.09));
+  --shadow-paper-low: drop-shadow(0 0.5px 0.5px oklch(20% 0.014 255 / 0.14)) drop-shadow(1px 2px 2px oklch(20% 0.014 255 / 0.08));
+
+  /* Physics Easings */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-snap: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Fonts */
+  --font-display: 'Chillax', 'Outfit', 'Plus Jakarta Sans', ui-rounded, sans-serif;
+  --font-sans: 'Chillax', 'Plus Jakarta Sans', 'Outfit', ui-rounded, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Torn bar shape */
+  --tear-bar: polygon(0% 0%, 100% 0%, 100% calc(100% - 9.75px), 99.44% calc(100% - 9.44px), 98.88% calc(100% - 9.19px), 98.32% calc(100% - 9px), 97.77% calc(100% - 8.23px), 97.21% calc(100% - 8.66px), 96.65% calc(100% - 8.44px), 96.09% calc(100% - 8.64px), 95.53% calc(100% - 8.59px), 94.97% calc(100% - 8.72px), 94.41% calc(100% - 8.28px), 93.85% calc(100% - 8.19px), 93.3% calc(100% - 8.66px), 92.74% calc(100% - 8.68px), 92.18% calc(100% - 8.81px), 91.62% calc(100% - 8.78px), 91.06% calc(100% - 9.29px), 90.5% calc(100% - 8.73px), 89.94% calc(100% - 8.9px), 89.39% calc(100% - 8.77px), 88.83% calc(100% - 8.93px), 88.27% calc(100% - 9.33px), 87.71% calc(100% - 9.82px), 87.15% calc(100% - 9.6px), 86.59% calc(100% - 9.85px), 86.03% calc(100% - 9.65px), 85.47% calc(100% - 10.09px), 84.92% calc(100% - 9.56px), 84.36% calc(100% - 9.7px), 83.8% calc(100% - 9.59px), 83.24% calc(100% - 9.23px), 82.68% calc(100% - 8.98px), 82.12% calc(100% - 9.4px), 81.56% calc(100% - 8.77px), 81.01% calc(100% - 9.1px), 80.45% calc(100% - 8.88px), 79.89% calc(100% - 9.13px), 79.33% calc(100% - 8.94px), 78.77% calc(100% - 8.66px), 78.21% calc(100% - 8.77px), 77.65% calc(100% - 9.13px), 77.09% calc(100% - 9.07px), 76.54% calc(100% - 9.39px), 75.98% calc(100% - 9.69px), 75.42% calc(100% - 9.56px), 74.86% calc(100% - 9.77px), 74.3% calc(100% - 9.87px), 73.74% calc(100% - 10.32px), 73.18% calc(100% - 9.89px), 72.63% calc(100% - 9.83px), 72.07% calc(100% - 9.46px), 71.51% calc(100% - 9.31px), 70.95% calc(100% - 8.9px), 70.39% calc(100% - 8.52px), 69.83% calc(100% - 8.35px), 69.27% calc(100% - 8.44px), 68.72% calc(100% - 8.54px), 68.16% calc(100% - 8.64px), 67.6% calc(100% - 8.87px), 67.04% calc(100% - 8.71px), 66.48% calc(100% - 8.97px), 65.92% calc(100% - 8.55px), 65.36% calc(100% - 8.82px), 64.8% calc(100% - 8.95px), 64.25% calc(100% - 8.96px), 63.69% calc(100% - 9.1px), 63.13% calc(100% - 9.38px), 62.57% calc(100% - 9.42px), 62.01% calc(100% - 9.5px), 61.45% calc(100% - 9.51px), 60.89% calc(100% - 9.77px), 60.34% calc(100% - 9.6px), 59.78% calc(100% - 9.86px), 59.22% calc(100% - 9.94px), 58.66% calc(100% - 10.28px), 58.1% calc(100% - 10.37px), 57.54% calc(100% - 10.37px), 56.98% calc(100% - 10.15px), 56.42% calc(100% - 10.15px), 55.87% calc(100% - 9.8px), 55.31% calc(100% - 9.61px), 54.75% calc(100% - 9.21px), 54.19% calc(100% - 8.96px), 53.63% calc(100% - 8.86px), 53.07% calc(100% - 8.97px), 52.51% calc(100% - 8.9px), 51.96% calc(100% - 8.94px), 51.4% calc(100% - 8.89px), 50.84% calc(100% - 8.94px), 50.28% calc(100% - 8.85px), 49.72% calc(100% - 8.86px), 49.16% calc(100% - 8.89px), 48.6% calc(100% - 8.96px), 48.04% calc(100% - 8.99px), 47.49% calc(100% - 9.25px), 46.93% calc(100% - 9.35px), 46.37% calc(100% - 9.37px), 45.81% calc(100% - 9.43px), 45.25% calc(100% - 9.53px), 44.69% calc(100% - 9.55px), 44.13% calc(100% - 9.84px), 43.58% calc(100% - 10.16px), 43.02% calc(100% - 10.27px), 42.46% calc(100% - 10.31px), 41.9% calc(100% - 10.2px), 41.34% calc(100% - 10.17px), 40.78% calc(100% - 10.14px), 40.22% calc(100% - 10.05px), 39.66% calc(100% - 10.03px), 39.11% calc(100% - 9.82px), 38.55% calc(100% - 9.5px), 37.99% calc(100% - 9.09px), 37.43% calc(100% - 9px), 36.87% calc(100% - 9.02px), 36.31% calc(100% - 8.98px), 35.75% calc(100% - 8.96px), 35.2% calc(100% - 8.91px), 34.64% calc(100% - 8.84px), 34.08% calc(100% - 8.76px), 33.52% calc(100% - 8.79px), 32.96% calc(100% - 8.83px), 32.4% calc(100% - 8.91px), 31.84% calc(100% - 9.01px), 31.28% calc(100% - 9.06px), 30.73% calc(100% - 9.09px), 30.17% calc(100% - 9.17px), 29.61% calc(100% - 9.19px), 29.05% calc(100% - 9.24px), 28.49% calc(100% - 9.38px), 27.93% calc(100% - 9.53px), 27.37% calc(100% - 9.77px), 26.82% calc(100% - 9.93px), 26.26% calc(100% - 10.02px), 25.7% calc(100% - 10.03px), 25.14% calc(100% - 10.03px), 24.58% calc(100% - 9.95px), 24.02% calc(100% - 9.81px), 23.46% calc(100% - 9.61px), 22.91% calc(100% - 9.39px), 22.35% calc(100% - 9.19px), 21.79% calc(100% - 9.07px), 21.23% calc(100% - 9.05px), 20.67% calc(100% - 9.07px), 20.11% calc(100% - 9.13px), 19.55% calc(100% - 9.22px), 18.99% calc(100% - 9.27px), 18.44% calc(100% - 9.29px), 17.88% calc(100% - 9.34px), 17.32% calc(100% - 9.39px), 16.76% calc(100% - 9.49px), 16.2% calc(100% - 9.58px), 15.64% calc(100% - 9.64px), 15.08% calc(100% - 9.68px), 14.53% calc(100% - 9.69px), 13.97% calc(100% - 9.69px), 13.41% calc(100% - 9.67px), 12.85% calc(100% - 9.62px), 12.29% calc(100% - 9.52px), 11.73% calc(100% - 9.42px), 11.17% calc(100% - 9.28px), 10.61% calc(100% - 9.12px), 10.06% calc(100% - 9.04px), 9.5% calc(100% - 9.01px), 8.94% calc(100% - 9.04px), 8.38% calc(100% - 9.08px), 7.82% calc(100% - 9.14px), 7.26% calc(100% - 9.23px), 6.7% calc(100% - 9.32px), 6.15% calc(100% - 9.43px), 5.59% calc(100% - 9.53px), 5.03% calc(100% - 9.57px), 4.47% calc(100% - 9.63px), 3.91% calc(100% - 9.67px), 3.35% calc(100% - 9.68px), 2.79% calc(100% - 9.69px), 2.23% calc(100% - 9.7px), 1.68% calc(100% - 9.71px), 1.12% calc(100% - 9.72px), 0.56% calc(100% - 9.74px), 0% calc(100% - 9.75px));
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-paper);
+  background-image: var(--grain), var(--fibre);
+  color: var(--color-ink);
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+
+/* ========================================================
+   HALLMARK TACTILE 3D BUTTONS
+   ======================================================== */
+.btn-hallmark {
+  --edge: 5px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 16px;
+  border: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  transition: transform 120ms var(--ease-snap), box-shadow 120ms var(--ease-snap), background-color 160ms var(--ease-snap);
+}
+
+.btn-hallmark:hover:not(:disabled) {
+  --edge: 7px;
+  transform: translateY(-2px);
+}
+
+.btn-hallmark:active:not(:disabled) {
+  --edge: 1px;
+  transform: translateY(4px);
+  transition-duration: 60ms;
+}
+
+.btn-hallmark:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Pear / Sunny Primary Button */
+.btn-hallmark-pear {
+  background-color: var(--color-pear);
+  background-image: var(--grain), var(--fibre);
+  color: var(--color-ink);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7),
+              inset 0 0 0 1px rgba(0, 0, 0, 0.08),
+              0 var(--edge) 0 0 var(--color-pear-deep),
+              2px calc(var(--edge) + 4px) 10px -2px rgba(28, 29, 34, 0.2);
+}
+
+/* Coral / Playful Warm Accent */
+.btn-hallmark-coral {
+  background-color: var(--color-coral);
+  background-image: var(--grain), var(--fibre);
+  color: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35),
+              inset 0 0 0 1px rgba(0, 0, 0, 0.12),
+              0 var(--edge) 0 0 var(--color-coral-deep),
+              2px calc(var(--edge) + 4px) 12px -2px rgba(255, 101, 82, 0.32);
+}
+
+/* Mint / Fresh Sprout Button */
+.btn-hallmark-mint {
+  background-color: var(--color-mint);
+  background-image: var(--grain), var(--fibre);
+  color: var(--color-ink);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65),
+              inset 0 0 0 1px rgba(0, 0, 0, 0.08),
+              0 var(--edge) 0 0 var(--color-mint-deep),
+              2px calc(var(--edge) + 4px) 10px -2px rgba(93, 226, 167, 0.28);
+}
+
+/* Sky Blue Button */
+.btn-hallmark-blue {
+  background-color: var(--color-blue);
+  background-image: var(--grain), var(--fibre);
+  color: var(--color-ink);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65),
+              inset 0 0 0 1px rgba(0, 0, 0, 0.08),
+              0 var(--edge) 0 0 var(--color-blue-deep),
+              2px calc(var(--edge) + 4px) 10px -2px rgba(115, 198, 253, 0.28);
+}
+
+/* Secondary White Card Stock Button */
+.btn-hallmark-secondary {
+  background-color: var(--color-card);
+  background-image: var(--fibre);
+  color: var(--color-ink);
+  box-shadow: inset 0 0 0 1px rgba(28, 29, 34, 0.12),
+              0 var(--edge) 0 0 var(--color-edge),
+              2px calc(var(--edge) + 3px) 8px -3px rgba(28, 29, 34, 0.16);
+}
+
+.btn-hallmark-secondary:hover:not(:disabled) {
+  background-color: #ffffff;
+}
+
+/* Deep Ink Button */
+.btn-hallmark-ink {
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15),
+              0 var(--edge) 0 0 #0d0e12,
+              2px calc(var(--edge) + 4px) 10px -2px rgba(28, 29, 34, 0.35);
+}
+
+/* Sizes */
+.btn-hallmark-sm {
+  --edge: 4px;
+  min-height: 40px;
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  border-radius: 13px;
+}
+.btn-hallmark-sm:hover:not(:disabled) {
+  --edge: 5px;
+}
+.btn-hallmark-sm:active:not(:disabled) {
+  --edge: 1px;
+  transform: translateY(3px);
+}
+
+.btn-hallmark-md {
+  --edge: 5px;
+  min-height: 50px;
+  padding: 0 1.5rem;
+  font-size: 1rem;
+  border-radius: 16px;
+}
+
+.btn-hallmark-lg {
+  --edge: 6px;
+  min-height: 58px;
+  padding: 0 2rem;
+  font-size: 1.125rem;
+  border-radius: 18px;
+}
+.btn-hallmark-lg:hover:not(:disabled) {
+  --edge: 8px;
+}
+
+/* Pill version */
+.btn-hallmark-pill {
+  border-radius: 9999px;
+}
+
+/* ========================================================
+   KNOBS & CHIPS (Hallmark Hum Navigation & Badges)
+   ======================================================== */
+.knob {
+  --edge: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 38px;
+  padding: 0 1rem;
+  border-radius: 12px;
+  background-color: var(--color-paper-2);
+  background-image: var(--fibre);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: inset 0 0 0 1px rgba(28, 29, 34, 0.08),
+              0 var(--edge) 0 0 var(--color-card-border);
+  transition: transform 120ms var(--ease-snap), box-shadow 120ms var(--ease-snap), background-color 160ms;
+}
+
+.knob:hover {
+  background-color: var(--color-paper-3);
+  transform: translateY(-1px);
+}
+
+.knob:active {
+  --edge: 1px;
+  transform: translateY(2px);
+}
+
+.chip-stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 32px;
+  padding: 0 0.85rem;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 0.775rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chip-paper {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  box-shadow: inset 0 0 0 1px rgba(28, 29, 34, 0.1);
+}
+
+.chip-ink {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.chip-coral {
+  background: color-mix(in oklab, var(--color-coral) 18%, white);
+  color: var(--color-coral-deep);
+  border: 1px solid color-mix(in oklab, var(--color-coral) 40%, transparent);
+}
+
+.chip-mint {
+  background: color-mix(in oklab, var(--color-mint) 22%, white);
+  color: var(--color-mint-deep);
+  border: 1px solid color-mix(in oklab, var(--color-mint) 45%, transparent);
+}
+
+.chip-pear {
+  background: color-mix(in oklab, var(--color-pear) 25%, white);
+  color: oklch(45% 0.12 85);
+  border: 1px solid color-mix(in oklab, var(--color-pear) 50%, transparent);
+}
+
+/* ========================================================
+   BINGO TILES (TACTILE 3D CARD STOCK)
+   ======================================================== */
+.tile-hallmark {
+  --edge: 5px;
+  --tile-edge: var(--color-edge);
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background-color: var(--color-card);
+  background-image: var(--fibre);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  cursor: pointer;
+  user-select: none;
+  box-shadow: inset 0 0 0 1px rgba(28, 29, 34, 0.1),
+              0 var(--edge) 0 0 var(--tile-edge),
+              2px calc(var(--edge) + 3px) 7px -2px rgba(28, 29, 34, 0.16);
+  transition: transform 120ms var(--ease-snap), box-shadow 120ms var(--ease-snap), background-color 160ms;
+}
+
+.tile-hallmark:hover:not(:disabled) {
+  --edge: 6px;
+  transform: translateY(-2px);
+}
+
+.tile-hallmark:active:not(:disabled) {
+  --edge: 1px;
+  transform: translateY(4px);
+}
+
+.tile-hallmark:disabled {
+  cursor: default;
+}
+
+/* Tile color variants */
+.tile-hallmark-pear {
+  background-color: var(--color-pear);
+  background-image: var(--grain), var(--fibre);
+  --tile-edge: var(--color-pear-deep);
+  color: var(--color-ink);
+}
+
+.tile-hallmark-coral {
+  background-color: var(--color-coral);
+  background-image: var(--grain), var(--fibre);
+  --tile-edge: var(--color-coral-deep);
+  color: #ffffff;
+}
+
+.tile-hallmark-mint {
+  background-color: var(--color-mint);
+  background-image: var(--grain), var(--fibre);
+  --tile-edge: var(--color-mint-deep);
+  color: var(--color-ink);
+}
+
+.tile-hallmark-blue {
+  background-color: var(--color-blue);
+  background-image: var(--grain), var(--fibre);
+  --tile-edge: var(--color-blue-deep);
+  color: var(--color-ink);
+}
+
+.tile-hallmark-marked {
+  background-color: var(--color-coral);
+  background-image: var(--grain), var(--fibre);
+  --tile-edge: var(--color-coral-deep);
+  color: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4),
+              0 var(--edge) 0 0 var(--color-coral-deep),
+              2px calc(var(--edge) + 4px) 10px -2px rgba(255, 101, 82, 0.35);
+}
+
+.tile-hallmark-called {
+  background-color: var(--color-coral);
+  background-image: var(--grain), var(--fibre);
+  --tile-edge: var(--color-coral-deep);
+  color: #ffffff;
+}
+
+/* ========================================================
+   DRAG & DROP TACTILE HALLMARK STATES
+   ======================================================== */
+.tile-draggable {
+  cursor: grab;
+  touch-action: none;
+}
+.tile-draggable:active {
+  cursor: grabbing;
+}
+
+.tile-dragging {
+  opacity: 0.4 !important;
+  transform: scale(0.94) !important;
+  box-shadow: 0 4px 12px rgba(28, 29, 34, 0.12) !important;
+  outline: 2px dashed var(--color-coral) !important;
+  cursor: grabbing !important;
+  z-index: 10 !important;
+}
+
+.tile-drag-over {
+  transform: translateY(-4px) scale(1.08) !important;
+  --edge: 8px !important;
+  box-shadow: inset 0 0 0 2px var(--color-coral),
+              0 var(--edge) 0 0 var(--color-coral-deep),
+              2px calc(var(--edge) + 6px) 14px -2px rgba(255, 101, 82, 0.35) !important;
+  background-color: oklch(97% 0.03 24) !important;
+  z-index: 30 !important;
+  transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 180ms ease !important;
+}
+
+.tile-swapped-snap {
+  animation: tile-swap-snap 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes tile-swap-snap {
+  0% {
+    transform: scale(0.92);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 6px rgba(255, 101, 82, 0.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+::view-transition-group(*) {
+  animation-duration: 260ms;
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile-swapped-snap {
+    animation: none !important;
+  }
+  ::view-transition-group(*) {
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ========================================================
+   CURLED CORNER PAPER CARDS (Hallmark Signature)
+   ======================================================== */
+.card-curled-wrap {
+  position: relative;
+  filter: var(--shadow-paper);
+}
+
+.card-curled {
+  --curl: 44px;
+  position: relative;
+  background-color: var(--color-card);
+  background-image: var(--grain), var(--fibre);
+  border-radius: 24px;
+  -webkit-mask: linear-gradient(315deg, transparent calc(var(--curl) * 0.7071), #000000 calc(var(--curl) * 0.7071 + 0.6px));
+  mask: linear-gradient(315deg, transparent calc(var(--curl) * 0.7071), #000000 calc(var(--curl) * 0.7071 + 0.6px));
+  transition: --curl 360ms var(--ease-snap);
+}
+
+.card-curled-wrap:hover .card-curled {
+  --curl: 58px;
+}
+
+.curl-corner {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: var(--curl, 44px);
+  height: var(--curl, 44px);
+  border-top-left-radius: 60% 60%;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  background: linear-gradient(315deg, #dcd8cb 0% 47%, #ffffff 58%, #eae6d9 100%);
+  pointer-events: none;
+  filter: drop-shadow(-2px -2px 3px rgba(28, 29, 34, 0.12));
+  transition: width 360ms var(--ease-snap), height 360ms var(--ease-snap);
+}
+
+.card-curled-wrap:hover .curl-corner {
+  width: 58px;
+  height: 58px;
+}
+
+/* Backing tilted colored mat */
+.sheet-mat {
+  position: absolute;
+  inset: -12px -16px -20px -12px;
+  border-radius: 28px;
+  background-color: var(--color-sugar);
+  background-image: var(--grain), var(--fibre);
+  transform: rotate(-2.4deg);
+  z-index: -1;
+  box-shadow: 0 10px 28px -8px rgba(28, 29, 34, 0.15);
+}
+
+/* ========================================================
+   STICKER STAMPS (Die-cut tilted label)
+   ======================================================== */
+.sticker-stamp {
+  position: absolute;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.15rem;
+  border-radius: 9999px;
+  background-color: var(--color-pear);
+  background-image: var(--grain), var(--fibre);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.1;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1),
+              0 6px 14px -2px rgba(28, 29, 34, 0.16);
+  transform: rotate(5.5deg);
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* ========================================================
+   TORN PAPER BAR
+   ======================================================== */
+.bar-torn {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-card);
+  background-image: var(--grain), var(--fibre);
+  filter: drop-shadow(0 2px 4px rgba(28, 29, 34, 0.08));
+}
+
+.bar-torn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 11px;
+  background-color: var(--color-card);
+  background-image: var(--grain), var(--fibre);
+  clip-path: var(--tear-bar);
+  pointer-events: none;
+}
+
+/* ========================================================
+   SAND PROGRESS TIMER TRACK
+   ======================================================== */
+.timer-track {
+  position: relative;
+  display: block;
+  height: 18px;
+  border-radius: 6px;
+  background-color: var(--color-paper-2);
+  box-shadow: inset 1px 1.5px 2px rgba(28, 29, 34, 0.14);
+}
+
+.timer-sand {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: inherit;
+  background-color: var(--color-sand);
+  background-image: var(--grain), var(--fibre);
+  box-shadow: 1px 0 2px rgba(28, 29, 34, 0.12);
+  transition: width 300ms ease-out;
+}

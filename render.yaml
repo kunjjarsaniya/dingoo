@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: dingoo-backend
+    env: node
+    plan: free
+    buildCommand: pnpm install && pnpm prisma:generate
+    startCommand: pnpm server
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: http://localhost:3000,https://dingoo.vercel.app,https://*.vercel.app
+      - key: ROOM_TTL_HOURS
+        value: 24
+      - key: COUNTDOWN_SECONDS
+        value: 3
+      - key: LOG_LEVEL
+        value: info

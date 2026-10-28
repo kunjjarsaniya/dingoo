@@ -1,0 +1,26 @@
+{
+  "name": "Dingoo — Real-Time Multiplayer Bingo",
+  "short_name": "Dingoo",
+  "description": "Tactile real-time multiplayer Bingo game with 40s turn timers, paper-cut card themes, and instant room synchronization.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF8F5",
+  "theme_color": "#FAF8F5",
+  "icons": [
+    {
+      "src": "/icon-light-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

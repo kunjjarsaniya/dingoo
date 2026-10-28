@@ -1,0 +1,106 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+enum RoomState {
+  WAITING
+  COUNTDOWN
+  PLAYING
+  FINISHED
+  CANCELLED
+}
+
+enum WinningCondition {
+  FIRST_LINE
+  FIVE_LINES
+  FULL_CARD
+}
+model Room {
+  id String @id @default(cuid())
+  code String @unique
+  state RoomState @default(WAITING)
+  hostPlayerId String?
+  cardSize Int @default(5)
+  rangeMin Int @default(1)
+  rangeMax Int @default(75)
+  minPlayers Int @default(2)
+  maxPlayers Int @default(10)
+  countdownSeconds Int @default(5)
+  winningCondition WinningCondition @default(FIVE_LINES)
+  gameStateVersion Int @default(0)
+  turnNumber Int @default(0)
+  currentPlayerId String?
+  expiresAt DateTime
+  startedAt DateTime?
+  endedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  players Player[]
+  selections NumberSelection[]
+  results GameResult[]
+  @@index([state, expiresAt])
+}
+model Player {
+  id String @id @default(cuid())
+  roomId String
+  name String
+  reconnectTokenHash String @unique
+  position Int
+  ready Boolean @default(false)
+  connected Boolean @default(false)
+  score Int @default(0)
+  completedLines Int @default(0)
+  card BingoCard?
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  selected NumberSelection[]
+  awardedLines CompletedLine[]
+  @@unique([roomId, name])
+  @@index([roomId, position])
+}
+model BingoCard {
+  id String @id @default(cuid())
+  playerId String @unique
+  size Int
+  values Json
+  marked Json
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+}
+model NumberSelection {
+  id String @id @default(cuid())
+  roomId String
+  playerId String
+  number Int
+  turnNumber Int
+  idempotencyKey String
+  createdAt DateTime @default(now())
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  player Player @relation(fields: [playerId], references: [id])
+  @@unique([roomId, idempotencyKey])
+  @@unique([roomId, number])
+  @@index([roomId, turnNumber])
+}
+model CompletedLine {
+  id String @id @default(cuid())
+  playerId String
+  lineIndex Int
+  awardedAt DateTime @default(now())
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  @@unique([playerId, lineIndex])
+}
+model GameResult {
+  id String @id @default(cuid())
+  roomId String
+  playerId String
+  rank Int
+  winner Boolean @default(false)
+  score Int
+  completedLines Int
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  @@index([roomId, rank])
+}
