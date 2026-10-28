@@ -49,3 +49,4 @@ export function DingooLogo({ className = '', showText = true, size = 'md' }: Din
     </div>
   )
 }
+
